@@ -1,12 +1,12 @@
-Breakout.Game = function( game )
+Breax.Game = function( game )
 {
 	this.game = game;
 	this.tiles = [
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+		[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+		[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+		[4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
 	];
 	this.bricks;
 	this.ball;
@@ -15,54 +15,59 @@ Breakout.Game = function( game )
 	this.ballIsReset = false;
 };
 
-Breakout.Game.prototype = 
+Breax.Game.prototype = 
 {
-	preload: function(){
-		this.load.image('brick', 'images/brick.png');
-		this.load.image('ball', 'images/ball.png');
-		this.game.load.spritesheet('brickTilemap', 'images/bricks.png', 64, 32, 25);
-	},
-
 	create: function(){
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		// Bricks
 		this.bricks = this.game.add.group();
-		for( i = 0; i < 5; i++ )
+		for( i = 0; i < this.tiles.length; i++ )
 		{
-			for( j = 0; j < 10; j++ )
+			for( j = 0; j < this.tiles[i].length; j++ )
 			{
-				brick = this.game.add.sprite( j * 80, 100 + i * 20, 'brickTilemap', this.tiles );
-				// brick.tint = 0x008B8B;
-
+				brick = this.game.add.sprite( 16 + j * 64, 100 + i * 32, 'bricks', this.tiles[i][j] );
 				this.game.physics.enable( brick );
 				brick.body.immovable = true;
 				this.bricks.add( brick );
 			}
 		}
 
-
 		// Ball
 		this.ball = this.game.add.sprite( 400, 350, 'ball' );
 		this.game.physics.arcade.enable( this.ball, Phaser.Physics.ARCADE );
-		this.ball.body.velocity.setTo(0, 400);
 		this.ball.body.collideWorldBounds = true;
 		this.ball.body.onWorldBounds = new Phaser.Signal();
 		this.ball.body.onWorldBounds.add(this.ballHitWall, this);
 		this.ball.body.bounce.set(1);
+		this.ballIsReset = true;
 
 		// Paddle
-		this.paddle = this.game.add.sprite( 440, 520, 'brick' );
-		this.paddle.height = 30;
+		this.paddle = this.game.add.sprite( 440, 520, 'paddle' );
+		this.paddle.height = 10;
 		this.paddle.width = 120;
 		this.game.physics.arcade.enable( this.paddle, Phaser.Physics.ARCADE );
 		this.paddle.body.immovable = true;
+
+		escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    	escKey.onDown.add( this.keyPressed, this );
+	},
+
+	keyPressed: function( key )
+	{
+		if( key.isDown && key.keyCode == 27 )
+		{
+			this.game.state.start('Menu');
+		}
 	},
 
 	brickHitWithBall: function( ball, brick ){
 		brick.kill();
 	},
 
+	/**
+	*	
+	*/
 	ballHitWall: function( sprite, up, down, left, right ){
 		if( down )
 		{

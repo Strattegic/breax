@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Breakout!!</title>
+        <title>Breax!!</title>
         <script src="phaser.min.js"></script>
     </head>
     <body>
@@ -24,9 +24,13 @@
     	(function(){
     		var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
 
-    		game.state.add('Boot', Breakout.Boot);
-    		game.state.add('Menu', Breakout.Menu);
-    		game.state.add('Game', Breakout.Game);
+    		game.global = {
+    			soundEnabled: true
+    		};
+
+    		game.state.add('Boot', Breax.Boot);
+    		game.state.add('Menu', Breax.Menu);
+    		game.state.add('Game', Breax.Game);
 
     		game.state.start('Boot');
     	})();
