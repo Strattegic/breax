@@ -28,10 +28,5 @@ Breax.Boot.prototype = {
         this.state.start('Menu');
         this.game.soundEnabled = true;
         this.game.score = 0;
-    },
-
-    update: function()
-    {
-
     }
 };
