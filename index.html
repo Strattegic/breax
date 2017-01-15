@@ -7,6 +7,11 @@
     </head>
     <body>
     <style type="text/css">
+    	body
+    	{
+    		background-color: #000;
+    	}
+    	
     	#game canvas
 		{
     		/*cursor: none !important;*/
@@ -19,18 +24,16 @@
     <script type="text/javascript" src="js/Boot.js"></script>
     <script type="text/javascript" src="js/Menu.js"></script>
     <script type="text/javascript" src="js/Game.js"></script>
+    <script type="text/javascript" src="js/GameOver.js"></script>
 
     <script type="text/javascript">
     	(function(){
     		var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
 
-    		game.global = {
-    			soundEnabled: true
-    		};
-
     		game.state.add('Boot', Breax.Boot);
     		game.state.add('Menu', Breax.Menu);
     		game.state.add('Game', Breax.Game);
+    		game.state.add('GameOver', Breax.GameOver);
 
     		game.state.start('Boot');
     	})();
