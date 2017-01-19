@@ -20,6 +20,11 @@ Breax.Boot.prototype = {
         this.load.image('ball', 'images/ball.png');
         this.game.load.spritesheet('heart_sprites', 'images/gui/heart_sprites.png', 22, 19, 2);
         this.game.load.spritesheet('bricks', 'images/bricks.png', 64, 32, 25);
+
+        this.game.load.audio('brick_hit', 'audio/brick_hit.wav');
+        this.game.load.audio('ball_hit', 'audio/ball_hit.wav');
+        this.game.load.audio('ball_out', 'audio/ball_out.wav');
+        this.game.load.audio('menu_click', 'audio/menu_click.wav');
     },
 
     create: function()

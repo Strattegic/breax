@@ -23,10 +23,12 @@ Breax.GameOver.prototype = {
     },
 
     retryButtonClick: function(){
+        this.game.global.sounds["menu_click"].play();
         this.state.start('Game', true, false);
     },
 
     quitButtonClick: function(){
+        this.game.global.sounds["menu_click"].play();
         this.state.start('Menu');
     }
 

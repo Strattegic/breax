@@ -19,7 +19,6 @@ Breax.Game = function( game )
 
 	this.ballIsReset = false;
 	this.scoreText;
-
 };
 
 Breax.Game.prototype = 
@@ -47,6 +46,7 @@ Breax.Game.prototype =
 		this.ball.body.collideWorldBounds = true;
     	this.ball.checkWorldBounds = true;
 		this.ball.body.onWorldBounds = new Phaser.Signal();
+		this.ball.body.onWorldBounds.add(this.ballHitWall, this);
     	this.ball.events.onOutOfBounds.add( this.ballOut, this );
 		this.ball.body.bounce.set(1);
 		this.ballIsReset = true;
@@ -75,6 +75,11 @@ Breax.Game.prototype =
     		heart.width = 22;
     		heart.height = 19;
     	}
+
+    	// Sounds
+    	this.game.global.sounds["ball_hit"] = this.game.add.audio('ball_hit');
+    	this.game.global.sounds["brick_hit"] = this.game.add.audio('brick_hit');
+    	this.game.global.sounds["ball_out"] = this.game.add.audio('ball_out');
 	},
 
 	/**
@@ -86,12 +91,15 @@ Breax.Game.prototype =
 		this.game.score = 0;
 	},
 
-	keyPressed: function( key )
-	{
+	keyPressed: function( key ){
 		if( key.isDown && key.keyCode == 27 )
 		{
 			this.game.state.start('Menu');
 		}
+	},
+
+	ballHitWall: function( sprite, up, down, left, right, game ){
+		this.game.global.sounds["ball_hit"].play();
 	},
 
 	ballHitBrick: function( ball, brick ){
@@ -100,8 +108,11 @@ Breax.Game.prototype =
 
 		if( this.bricks.countLiving() == 0 )
 		{
-			// no more bricks left
+			// show success screen
+			// currently: success screen == game over screen
+			this.game.state.start('GameOver');
 		}
+		this.game.global.sounds["brick_hit"].play();
 	},
 
 	/**
@@ -120,6 +131,8 @@ Breax.Game.prototype =
 			// no more lives left, gameover
 			this.state.start('GameOver');
 		}
+
+		this.game.global.sounds["ball_out"].play();
 	},
 
 	restartBall: function(){
@@ -161,6 +174,8 @@ Breax.Game.prototype =
 		angle = 180 + ( paddleHitX / paddle.width ) * 180;
 
 		this.game.physics.arcade.velocityFromAngle(angle, this.defaultBallSpeed, this.ball.body.velocity);
+
+		this.game.global.sounds["ball_hit"].play();
 	},
 
 	render: function(){

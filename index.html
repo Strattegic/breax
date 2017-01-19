@@ -30,6 +30,10 @@
     	(function(){
     		var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
 
+            game.global = {
+                sounds: []
+            }
+
     		game.state.add('Boot', Breax.Boot);
     		game.state.add('Menu', Breax.Menu);
     		game.state.add('Game', Breax.Game);
