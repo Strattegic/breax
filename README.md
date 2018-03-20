@@ -1,4 +1,4 @@
-# gd_breakout
+# breax
 
 A breakout clone made with phaser.io
 
