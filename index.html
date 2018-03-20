@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Breax!!</title>
-        <script src="phaser.min.js"></script>
+        <script src="node_modules/phaser-ce/build/phaser.min.js"></script>
     </head>
     <body>
     <style type="text/css">
@@ -30,15 +30,18 @@
     	(function(){
     		var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
 
+            // initialize necessary varibales for a global state
             game.global = {
                 sounds: []
             }
 
+            // initialize all the different game states
     		game.state.add('Boot', Breax.Boot);
     		game.state.add('Menu', Breax.Menu);
     		game.state.add('Game', Breax.Game);
     		game.state.add('GameOver', Breax.GameOver);
 
+            // start with the boot screen
     		game.state.start('Boot');
     	})();
     </script>

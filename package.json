@@ -1,0 +1,22 @@
+{
+  "name": "gd_breakout",
+  "version": "1.0.0",
+  "description": "a breakout clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Strattegic/gd_breakout.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Strattegic/gd_breakout/issues"
+  },
+  "homepage": "https://github.com/Strattegic/gd_breakout#readme",
+  "dependencies": {
+    "phaser-ce": "^2.10.2"
+  }
+}
